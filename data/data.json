@@ -1,186 +1,47 @@
-{
-  "personal": {
-    "name": "Your Full Name",
-    "title": "Senior Software Engineer",
-    "location": "Melbourne, Australia",
-    "summary": "Passionate software engineer with 5+ years building scalable applications...",
-    "elevator_pitch": "Brief 30-second introduction highlighting your unique value proposition",
-    "contact": {
-      "email": "your.email@example.com",
-      "linkedin": "https://linkedin.com/in/yourprofile",
-      "github": "https://github.com/yourusername",
-      "portfolio": "https://yourportfolio.com"
-    }
+[
+  {
+    "id": "book_001",
+    "title": "1984",
+    "author": "George Orwell",
+    "published_date": "1949-06-08",
+    "genres": ["Dystopian", "Political Fiction", "Science Fiction"],
+    "summary": "A dystopian novel set in a totalitarian society ruled by Big Brother. The story follows Winston Smith, who secretly rebels against a regime that manipulates truth, language, and history to maintain absolute control.",
+    "embedding_text": "Title: 1984. Author: George Orwell. Published: 1949-06-08. Genres: Dystopian, Political Fiction, Science Fiction. Summary: A dystopian novel set in a totalitarian society ruled by Big Brother. The story follows Winston Smith, who secretly rebels against a regime that manipulates truth, language, and history to maintain absolute control."
   },
-  "salary_location": {
-    "current_salary": "$85,000 - $95,000 AUD",
-    "salary_expectations": "$95,000 - $110,000 AUD based on role complexity",
-    "location_preferences": ["Melbourne CBD", "Remote", "Hybrid"],
-    "relocation_willing": true,
-    "remote_experience": "3+ years remote collaboration experience",
-    "travel_availability": "Available for interstate travel up to 25%",
-    "work_authorization": "Australian Citizen / Permanent Resident"
+  {
+    "id": "book_002",
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "published_date": "1960-07-11",
+    "genres": ["Southern Gothic", "Bildungsroman"],
+    "summary": "Set in the American South, the novel explores racial injustice through the eyes of Scout Finch. Her father, Atticus Finch, defends a Black man falsely accused of assault, exposing deep-rooted prejudice in their community.",
+    "embedding_text": "Title: To Kill a Mockingbird. Author: Harper Lee. Published: 1960-07-11. Genres: Southern Gothic, Bildungsroman. Summary: Set in the American South, the novel explores racial injustice through the eyes of Scout Finch. Her father, Atticus Finch, defends a Black man falsely accused of assault, exposing deep-rooted prejudice in their community."
   },
-  "experience": [
-    {
-      "company": "TechCorp Australia",
-      "title": "Senior Software Engineer",
-      "duration": "Jan 2021 - Present (3.5 years)",
-      "company_context": "200+ employee fintech startup, Series B funding",
-      "team_structure": "Engineering team of 25, direct reports: 3 junior developers",
-      "achievements_star": [
-        {
-          "situation": "Legacy monolith causing 3-second page load times affecting user retention",
-          "task": "Lead architectural redesign to improve performance",
-          "action": "Implemented microservices architecture using Docker, Kubernetes, and Redis caching",
-          "result": "Reduced load times by 40% to 1.8s, increased user retention by 15%, saved $50K annually in server costs"
-        }
-      ],
-      "technical_skills_used": [
-        "Python",
-        "AWS (EC2, RDS, S3)",
-        "Docker",
-        "Kubernetes",
-        "PostgreSQL"
-      ],
-      "leadership_examples": [
-        "Mentored 3 junior developers",
-        "Led code review processes",
-        "Coordinated with product and design teams"
-      ],
-      "budget_managed": "$300K annual infrastructure budget",
-      "team_size_managed": 5
-    }
-  ],
-  "skills": {
-    "technical": {
-      "programming_languages": [
-        {
-          "language": "Python",
-          "years": 5,
-          "proficiency": "Expert",
-          "frameworks": ["Django", "FastAPI", "Flask"]
-        },
-        {
-          "language": "JavaScript",
-          "years": 4,
-          "proficiency": "Advanced",
-          "frameworks": ["React", "Node.js", "TypeScript"]
-        }
-      ],
-      "databases": [
-        "PostgreSQL (5 years)",
-        "MongoDB (3 years)",
-        "Redis (2 years)"
-      ],
-      "cloud_platforms": [
-        "AWS (4 years)",
-        "Docker (3 years)",
-        "Kubernetes (2 years)"
-      ],
-      "ai_ml": [
-        "RAG systems",
-        "Vector databases",
-        "LLM integration",
-        "OpenAI API"
-      ]
-    },
-    "soft_skills": [
-      "Technical Leadership",
-      "Cross-functional Collaboration",
-      "Mentoring",
-      "Problem-solving",
-      "Agile/Scrum"
-    ],
-    "certifications": [
-      "AWS Solutions Architect (expires 2025)",
-      "Certified Scrum Master (2023)"
-    ]
+  {
+    "id": "book_003",
+    "title": "The Hobbit",
+    "author": "J.R.R. Tolkien",
+    "published_date": "1937-09-21",
+    "genres": ["Fantasy", "Adventure"],
+    "summary": "Bilbo Baggins, a reluctant hobbit, embarks on an unexpected journey with a group of dwarves to reclaim their homeland from the dragon Smaug. Along the way, he discovers courage, wit, and a mysterious ring.",
+    "embedding_text": "Title: The Hobbit. Author: J.R.R. Tolkien. Published: 1937-09-21. Genres: Fantasy, Adventure. Summary: Bilbo Baggins, a reluctant hobbit, embarks on an unexpected journey with a group of dwarves to reclaim their homeland from the dragon Smaug. Along the way, he discovers courage, wit, and a mysterious ring."
   },
-  "education": {
-    "university": "University of Melbourne",
-    "degree": "Bachelor of Computer Science",
-    "graduation_year": 2019,
-    "gpa": "3.7/4.0 (High Distinction)",
-    "relevant_coursework": [
-      "Data Structures",
-      "Algorithms",
-      "Database Systems",
-      "Machine Learning"
-    ],
-    "thesis_project": "Predictive Analytics for E-commerce Recommendations"
+  {
+    "id": "book_004",
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "published_date": "1813-01-28",
+    "genres": ["Romance", "Classic Literature"],
+    "summary": "Elizabeth Bennet navigates issues of class, marriage, and morality in early 19th-century England. Her evolving relationship with the reserved Mr. Darcy challenges her initial judgments and societal expectations.",
+    "embedding_text": "Title: Pride and Prejudice. Author: Jane Austen. Published: 1813-01-28. Genres: Romance, Classic Literature. Summary: Elizabeth Bennet navigates issues of class, marriage, and morality in early 19th-century England. Her evolving relationship with the reserved Mr. Darcy challenges her initial judgments and societal expectations."
   },
-  "projects_portfolio": [
-    {
-      "name": "AI-Powered Digital Twin Workshop Platform",
-      "description": "End-to-end RAG system for interview preparation",
-      "technologies": ["Python", "Upstash Vector", "Groq API", "Next.js"],
-      "impact": "Helped 100+ professionals improve interview performance",
-      "github_url": "https://github.com/username/digital-twin",
-      "live_demo": "https://mydigitaltwin.vercel.app"
-    }
-  ],
-  "career_goals": {
-    "short_term": "Lead technical architect role with AI/ML focus",
-    "long_term": "Head of Engineering at AI-first company",
-    "learning_focus": [
-      "Advanced AI/ML systems",
-      "Large-scale system architecture",
-      "Team leadership"
-    ],
-    "industries_interested": ["Fintech", "AI/ML", "Enterprise SaaS"]
-  },
-  "interview_prep": {
-    "common_questions": {
-      "behavioral": [
-        "Tell me about a time you had to lead a difficult technical decision",
-        "Describe a project where you had to learn a new technology quickly",
-        "How do you handle conflicting priorities and tight deadlines?"
-      ],
-      "technical": [
-        "Walk me through your approach to system design for a high-traffic application",
-        "How would you implement a real-time notification system?",
-        "Explain your experience with microservices architecture"
-      ],
-      "situational": [
-        "A critical production bug is affecting customers. Walk me through your response process",
-        "How would you approach mentoring a struggling team member?",
-        "Describe how you would evaluate and implement a new technology in your team"
-      ],
-      "company_research": {
-        "research_areas": [
-          "Company mission and values",
-          "Recent product launches",
-          "Engineering culture",
-          "Technical challenges"
-        ],
-        "preparation_questions": [
-          "What excites you about our product?",
-          "Why do you want to work here?",
-          "What questions do you have for us?"
-        ]
-      }
-    },
-    "weakness_mitigation": [
-      {
-        "weakness": "Limited experience with Kubernetes in production",
-        "mitigation": "Currently completing CKA certification, have experience with Docker and container orchestration concepts"
-      }
-    ]
-  },
-  "professional_development": {
-    "recent_learning": [
-      "RAG systems implementation",
-      "Vector databases",
-      "MCP protocol development"
-    ],
-    "conferences_attended": ["PyCon Australia 2024", "AWS re:Invent 2023"],
-    "publications": [
-      "Blog post: Building Production RAG Systems with Upstash Vector"
-    ],
-    "open_source": [
-      "Contributor to FastAPI documentation",
-      "Maintainer of internal Python utilities library"
-    ]
+  {
+    "id": "book_005",
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "published_date": "1925-04-10",
+    "genres": ["Tragedy", "Historical Fiction"],
+    "summary": "Narrated by Nick Carraway, the novel portrays the mysterious Jay Gatsby and his obsessive love for Daisy Buchanan. Set during the Jazz Age, it critiques wealth, illusion, and the American Dream.",
+    "embedding_text": "Title: The Great Gatsby. Author: F. Scott Fitzgerald. Published: 1925-04-10. Genres: Tragedy, Historical Fiction. Summary: Narrated by Nick Carraway, the novel portrays the mysterious Jay Gatsby and his obsessive love for Daisy Buchanan. Set during the Jazz Age, it critiques wealth, illusion, and the American Dream."
   }
-}
+]
