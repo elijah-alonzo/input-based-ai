@@ -2,7 +2,7 @@ import data from "@/data/data.json";
 import {
   initializeVectorStore,
   retrieveRelevant,
-  summarizeAnswer,
+  generateArticle,
 } from "@/lib/rag";
 
 type ChatRequest = {
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     }
 
     const matches = await retrieveRelevant(question, 6);
-    const result = await summarizeAnswer(question, matches);
+    const result = await generateArticle(question, matches);
 
     return Response.json({
       question,

@@ -188,3 +188,63 @@ Rules:
     };
   }
 }
+
+export async function generateArticle(
+  topic: string,
+  chunks: RetrievedChunk[],
+): Promise<{
+  answer: string;
+  confidence: "high" | "medium" | "low";
+  evidence: string[];
+}> {
+  const top = chunks.slice(0, 3);
+  const evidence = top.map((chunk) => chunk.path);
+  const context = chunks.length > 0 
+    ? top.map((chunk) => `${chunk.path}: ${chunk.text}`).join("\n")
+    : "No specific context available.";
+
+  const confidence: "high" | "medium" | "low" =
+    chunks.length === 0 ? "low" : top[0].score >= 0.8 ? "high" : top[0].score >= 0.6 ? "medium" : "low";
+
+  try {
+    const completion = await groq.chat.completions.create({
+      messages: [
+        {
+          role: "system",
+          content: `You are an expert article writer. Generate complete, well-structured articles on the given topic. Each article must include:
+- A clear, relevant title
+- An introduction with context and background
+- Multiple body paragraphs with detailed explanations and examples
+- A conclusion summarizing key points
+
+Use a professional and informative tone. Write clearly and expand on topics with relevant information. Ensure the article is coherent and logically organized.${chunks.length > 0 ? " Use the provided context as reference when relevant, but expand beyond it to create a comprehensive article." : ""}`,
+        },
+        {
+          role: "user",
+          content: chunks.length > 0 
+            ? `Topic: ${topic}\n\nRelevant context:\n${context}\n\nWrite a detailed, well-structured article about this topic.`
+            : `Topic: ${topic}\n\nWrite a detailed, well-structured article about this topic.`,
+        },
+      ],
+      model: "llama-3.1-8b-instant",
+      temperature: 0.7,
+      max_tokens: 1200,
+    });
+
+    const answer =
+      completion.choices[0]?.message?.content || "Unable to generate article.";
+
+    return {
+      answer,
+      confidence,
+      evidence,
+    };
+  } catch (error) {
+    console.error("Groq API error:", error);
+    return {
+      answer: "Error generating article. Please try again.",
+      confidence: "low",
+      evidence,
+    };
+  }
+}

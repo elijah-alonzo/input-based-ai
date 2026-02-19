@@ -58,7 +58,7 @@ export default function Home() {
             type="text"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
-            placeholder="Ask a question..."
+            placeholder="Ask a context..."
             className="flex-1 border border-gray-300 px-3 py-2 text-sm text-black focus:outline-none"
           />
           <button
@@ -74,7 +74,8 @@ export default function Home() {
 
         {result && (
           <div className="border border-gray-300 p-4 text-sm whitespace-pre-wrap">
-            {result.answer}
+            <div className="mb-2 font-semibold text-blue-700">AI Response:</div>
+            <div>{result.answer}</div>
           </div>
         )}
       </div>
