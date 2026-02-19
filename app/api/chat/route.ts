@@ -39,7 +39,6 @@ export async function POST(request: Request) {
     return Response.json({
       question,
       answer: result.answer,
-      confidence: result.confidence,
       evidence: result.evidence,
       matches,
     });
