@@ -39,7 +39,13 @@ function flattenJson(
     typeof value === "boolean"
   ) {
     const path = basePath || "root";
-    return [{ path, text: String(value), id: `${path}-${Date.now()}-${Math.random()}` }];
+    return [
+      {
+        path,
+        text: String(value),
+        id: `${path}-${Date.now()}-${Math.random()}`,
+      },
+    ];
   }
 
   if (Array.isArray(value)) {
@@ -80,7 +86,7 @@ function flattenJson(
 // Initialize vector store with data
 export async function initializeVectorStore(jsonData: JsonValue) {
   const chunks = flattenJson(jsonData);
-  
+
   // Upsert chunks to vector store
   const vectors = chunks.map((chunk) => ({
     id: chunk.id,
@@ -137,9 +143,7 @@ export async function summarizeAnswer(
 
   const top = chunks.slice(0, 3);
   const evidence = top.map((chunk) => chunk.path);
-  const context = top
-    .map((chunk) => `${chunk.path}: ${chunk.text}`)
-    .join("\n");
+  const context = top.map((chunk) => `${chunk.path}: ${chunk.text}`).join("\n");
 
   const confidence: "high" | "medium" | "low" =
     top[0].score >= 0.8 ? "high" : top[0].score >= 0.6 ? "medium" : "low";
@@ -167,7 +171,8 @@ Rules:
       max_tokens: 500,
     });
 
-    const answer = completion.choices[0]?.message?.content || "Unable to generate response.";
+    const answer =
+      completion.choices[0]?.message?.content || "Unable to generate response.";
 
     return {
       answer,

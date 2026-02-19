@@ -1,5 +1,9 @@
 import data from "@/data/data.json";
-import { initializeVectorStore, retrieveRelevant, summarizeAnswer } from "@/lib/rag";
+import {
+  initializeVectorStore,
+  retrieveRelevant,
+  summarizeAnswer,
+} from "@/lib/rag";
 
 type ChatRequest = {
   question?: string;
