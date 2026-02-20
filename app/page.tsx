@@ -1,22 +1,35 @@
+/**
+ * FILE: app/page.tsx
+ *
+ * ANO YUNG FILE NA TO?
+ * - Ito yung main page/form na nakikita ng user
+ * - May 4 input fields for project information
+ * - Pag nag-submit, mag-generate ng full article
+ *
+ * FLOW:
+ * User fills out form → Click "Generate Article" → Send to API →
+ * Wait for AI → Display generated article
+ */
+
 "use client";
 
 import { FormEvent, useState } from "react";
 
-// Type definition for the API response
+// Yung structure ng response na babalik from API
 type ChatResponse = {
-  question: string;
-  answer: string;
-  evidence: string[];
+  question: string; // Yung combined prompt na sinend
+  answer: string; // Yung actual article na ginawa ng AI
+  evidence: string[]; // Yung sources/references na ginamit
 };
 
 export default function Home() {
-  // State for all form input fields
+  // State variables para sa 4 input fields
   const [projectTitle, setProjectTitle] = useState("");
   const [projectDate, setProjectDate] = useState("");
   const [club, setClub] = useState("");
   const [narrative, setNarrative] = useState("");
 
-  // State for managing the response and UI
+  // State para sa response at UI states (loading, error, etc)
   const [result, setResult] = useState<ChatResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +39,7 @@ export default function Home() {
     setError(null);
     setResult(null);
 
-    // Validate that at least one field has content
+    // Check muna if may laman man lang kahit isa sa fields
     if (
       !projectTitle.trim() &&
       !projectDate.trim() &&
@@ -40,8 +53,8 @@ export default function Home() {
     setIsLoading(true);
 
     try {
-      // Send all form fields to the API
-      // The API will combine these into a structured prompt for article generation
+      // I-send natin lahat ng form fields sa API
+      // Yung API yung bahala na mag-combine at mag-generate ng article
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -71,13 +84,13 @@ export default function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white text-black p-4">
       <div className="w-full max-w-2xl space-y-6">
-        {/* Multi-field form for collecting project information */}
+        {/* Yung form kung saan mag-i-input yung user ng project details */}
         <form onSubmit={onSubmit} className="space-y-4">
           <div className="text-xl font-semibold mb-4">
             Project Article Generator
           </div>
 
-          {/* Project Title Input Field */}
+          {/* Field #1: Project Title - Yung pangalan ng project */}
           <div className="space-y-1">
             <label htmlFor="projectTitle" className="block text-sm font-medium">
               Project Title
@@ -92,7 +105,7 @@ export default function Home() {
             />
           </div>
 
-          {/* Project Date Input Field */}
+          {/* Field #2: Project Date - Kelan nangyari yung project */}
           <div className="space-y-1">
             <label htmlFor="projectDate" className="block text-sm font-medium">
               Project Date
@@ -107,7 +120,7 @@ export default function Home() {
             />
           </div>
 
-          {/* Club/Organization Input Field */}
+          {/* Field #3: Club/Organization - Sino yung nag-organize */}
           <div className="space-y-1">
             <label htmlFor="club" className="block text-sm font-medium">
               Club/Organization
@@ -122,7 +135,7 @@ export default function Home() {
             />
           </div>
 
-          {/* Narrative Textarea - for detailed project description */}
+          {/* Field #4: Narrative - Dito yung detailed description (TEXTAREA, pwede maraming lines) */}
           <div className="space-y-1">
             <label htmlFor="narrative" className="block text-sm font-medium">
               Project Narrative
@@ -137,7 +150,7 @@ export default function Home() {
             />
           </div>
 
-          {/* Submit button */}
+          {/* Button - Pag nag-click dito, mag-start na mag-generate ng article */}
           <button
             type="submit"
             disabled={isLoading}
@@ -147,8 +160,10 @@ export default function Home() {
           </button>
         </form>
 
+        {/* Pag may error, ipapakita dito (red text) */}
         {error && <div className="text-sm text-red-600">{error}</div>}
 
+        {/* Pag may result na from AI, dito lalabas yung generated article */}
         {result && (
           <div className="border border-gray-300 p-4 text-sm whitespace-pre-wrap">
             <div className="mb-2 font-semibold text-blue-700">AI Response:</div>
