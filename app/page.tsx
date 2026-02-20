@@ -1,35 +1,18 @@
-/**
- * FILE: app/page.tsx
- *
- * ANO YUNG FILE NA TO?
- * - Ito yung main page/form na nakikita ng user
- * - May 4 input fields for project information
- * - Pag nag-submit, mag-generate ng full article
- *
- * FLOW:
- * User fills out form → Click "Generate Article" → Send to API →
- * Wait for AI → Display generated article
- */
-
 "use client";
 
 import { FormEvent, useState } from "react";
 
-// Yung structure ng response na babalik from API
 type ChatResponse = {
-  question: string; // Yung combined prompt na sinend
-  answer: string; // Yung actual article na ginawa ng AI
-  evidence: string[]; // Yung sources/references na ginamit
+  question: string;
+  answer: string;
+  evidence: string[];
 };
 
 export default function Home() {
-  // State variables para sa 4 input fields
   const [projectTitle, setProjectTitle] = useState("");
   const [projectDate, setProjectDate] = useState("");
   const [club, setClub] = useState("");
   const [narrative, setNarrative] = useState("");
-
-  // State para sa response at UI states (loading, error, etc)
   const [result, setResult] = useState<ChatResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +22,6 @@ export default function Home() {
     setError(null);
     setResult(null);
 
-    // Check muna if may laman man lang kahit isa sa fields
     if (
       !projectTitle.trim() &&
       !projectDate.trim() &&
@@ -53,8 +35,6 @@ export default function Home() {
     setIsLoading(true);
 
     try {
-      // I-send natin lahat ng form fields sa API
-      // Yung API yung bahala na mag-combine at mag-generate ng article
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -82,94 +62,94 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white text-black p-4">
-      <div className="w-full max-w-2xl space-y-6">
-        {/* Yung form kung saan mag-i-input yung user ng project details */}
-        <form onSubmit={onSubmit} className="space-y-4">
-          <div className="text-xl font-semibold mb-4">
-            Project Article Generator
+    <div className="min-h-screen bg-white text-black p-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <form onSubmit={onSubmit} className="space-y-4">
+              <div className="text-xl font-semibold mb-4">
+                Article Generator Test
+              </div>
+              <div className="space-y-1">
+                <label
+                  htmlFor="projectTitle"
+                  className="block text-sm font-medium"
+                >
+                  Project Title
+                </label>
+                <input
+                  id="projectTitle"
+                  type="text"
+                  value={projectTitle}
+                  onChange={(e) => setProjectTitle(e.target.value)}
+                  className="w-full border border-gray-300 px-3 py-2 text-sm text-black focus:outline-none focus:border-blue-500"
+                />
+              </div>
+              <div className="space-y-1">
+                <label
+                  htmlFor="projectDate"
+                  className="block text-sm font-medium"
+                >
+                  Project Date
+                </label>
+                <input
+                  id="projectDate"
+                  type="text"
+                  value={projectDate}
+                  onChange={(e) => setProjectDate(e.target.value)}
+                  className="w-full border border-gray-300 px-3 py-2 text-sm text-black focus:outline-none focus:border-blue-500"
+                />
+              </div>
+              <div className="space-y-1">
+                <label htmlFor="club" className="block text-sm font-medium">
+                  Club/Organization
+                </label>
+                <input
+                  id="club"
+                  type="text"
+                  value={club}
+                  onChange={(e) => setClub(e.target.value)}
+                  className="w-full border border-gray-300 px-3 py-2 text-sm text-black focus:outline-none focus:border-blue-500"
+                />
+              </div>
+              <div className="space-y-1">
+                <label
+                  htmlFor="narrative"
+                  className="block text-sm font-medium"
+                >
+                  Project Narrative
+                </label>
+                <textarea
+                  id="narrative"
+                  value={narrative}
+                  onChange={(e) => setNarrative(e.target.value)}
+                  rows={6}
+                  className="w-full border border-gray-300 px-3 py-2 text-sm text-black focus:outline-none focus:border-blue-500 resize-vertical"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full border px-4 py-2 text-sm disabled:opacity-50 bg-black text-white transition-colors duration-200 hover:border-gray-700 disabled:hover:border-gray-300 disabled:hover:bg-transparent"
+              >
+                {isLoading ? "Generating Article..." : "Generate Article"}
+              </button>
+            </form>
+            {error && <div className="text-sm text-red-600">{error}</div>}
           </div>
-
-          {/* Field #1: Project Title - Yung pangalan ng project */}
-          <div className="space-y-1">
-            <label htmlFor="projectTitle" className="block text-sm font-medium">
-              Project Title
-            </label>
-            <input
-              id="projectTitle"
-              type="text"
-              value={projectTitle}
-              onChange={(e) => setProjectTitle(e.target.value)}
-              placeholder="Enter the project title..."
-              className="w-full border border-gray-300 px-3 py-2 text-sm text-black focus:outline-none focus:border-blue-500"
-            />
+          <div className="space-y-2">
+            <div className="text-xl font-semibold">Article Generated</div>
+            <div className="border border-gray-300 p-4 text-sm whitespace-pre-wrap min-h-[460px]">
+              {isLoading ? (
+                <div className="text-gray-300">Generating article...</div>
+              ) : result ? (
+                <div>{result.answer}</div>
+              ) : (
+                <div className="text-gray-300">Article is displayed here</div>
+              )}
+            </div>
           </div>
-
-          {/* Field #2: Project Date - Kelan nangyari yung project */}
-          <div className="space-y-1">
-            <label htmlFor="projectDate" className="block text-sm font-medium">
-              Project Date
-            </label>
-            <input
-              id="projectDate"
-              type="text"
-              value={projectDate}
-              onChange={(e) => setProjectDate(e.target.value)}
-              placeholder="e.g., January 2026 or 2026-01-15..."
-              className="w-full border border-gray-300 px-3 py-2 text-sm text-black focus:outline-none focus:border-blue-500"
-            />
-          </div>
-
-          {/* Field #3: Club/Organization - Sino yung nag-organize */}
-          <div className="space-y-1">
-            <label htmlFor="club" className="block text-sm font-medium">
-              Club/Organization
-            </label>
-            <input
-              id="club"
-              type="text"
-              value={club}
-              onChange={(e) => setClub(e.target.value)}
-              placeholder="Name of the club or organization..."
-              className="w-full border border-gray-300 px-3 py-2 text-sm text-black focus:outline-none focus:border-blue-500"
-            />
-          </div>
-
-          {/* Field #4: Narrative - Dito yung detailed description (TEXTAREA, pwede maraming lines) */}
-          <div className="space-y-1">
-            <label htmlFor="narrative" className="block text-sm font-medium">
-              Project Narrative
-            </label>
-            <textarea
-              id="narrative"
-              value={narrative}
-              onChange={(e) => setNarrative(e.target.value)}
-              placeholder="Describe the project, its goals, activities, outcomes, and impact..."
-              rows={6}
-              className="w-full border border-gray-300 px-3 py-2 text-sm text-black focus:outline-none focus:border-blue-500 resize-vertical"
-            />
-          </div>
-
-          {/* Button - Pag nag-click dito, mag-start na mag-generate ng article */}
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full border border-gray-300 px-4 py-2 text-sm disabled:opacity-50 hover:bg-gray-50 transition-colors"
-          >
-            {isLoading ? "Generating Article..." : "Generate Article"}
-          </button>
-        </form>
-
-        {/* Pag may error, ipapakita dito (red text) */}
-        {error && <div className="text-sm text-red-600">{error}</div>}
-
-        {/* Pag may result na from AI, dito lalabas yung generated article */}
-        {result && (
-          <div className="border border-gray-300 p-4 text-sm whitespace-pre-wrap">
-            <div className="mb-2 font-semibold text-blue-700">AI Response:</div>
-            <div>{result.answer}</div>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );
