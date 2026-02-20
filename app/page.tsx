@@ -78,7 +78,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="space-y-4">
             <form onSubmit={onSubmit} className="space-y-4">
-              <div className="text-xl font-semibold mb-4">
+              <div className="text-3xl font-semibold mb-4">
                 Community Project Article Generator
               </div>
               <div className="space-y-1">
@@ -207,7 +207,6 @@ export default function Home() {
             </form>
           </div>
           <div className="space-y-2">
-            <div className="text-xl font-semibold">Generated Article</div>
             <div className="border border-gray-300 rounded-sm text-sm min-h-[460px]">
               {imagePreview && (
                 <img
@@ -220,7 +219,14 @@ export default function Home() {
                 {isLoading ? (
                   <div className="text-gray-500">Generating article...</div>
                 ) : result ? (
-                  <div className="leading-relaxed">{result.answer}</div>
+                  <div className="leading-relaxed">
+                    {projectTitle && (
+                      <h1 className="text-2xl font-bold mb-4 text-center">
+                        {projectTitle}
+                      </h1>
+                    )}
+                    <p className="text-justify">{result.answer}</p>
+                  </div>
                 ) : (
                   <div className="text-gray-400">
                     Complete the form and click "Generate Article" to create a
