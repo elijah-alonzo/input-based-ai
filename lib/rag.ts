@@ -64,9 +64,29 @@ Create a comprehensive article with title, introduction, body paragraphs, and co
     const article =
       completion.choices[0]?.message?.content || "Unable to generate article.";
     return article;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Groq API error:", error);
-    return "Error generating article. Please try again.";
+
+    // Provide specific error messages based on the error type
+    if (error.status === 403) {
+      throw new Error(
+        "Access denied to Groq API. Please check your API key or network settings.",
+      );
+    } else if (error.status === 401) {
+      throw new Error(
+        "Invalid Groq API key. Please check your API key configuration.",
+      );
+    } else if (error.status === 429) {
+      throw new Error("Rate limit exceeded. Please try again in a moment.");
+    } else if (error.status >= 500) {
+      throw new Error(
+        "Groq API service is temporarily unavailable. Please try again later.",
+      );
+    } else {
+      throw new Error(
+        `Failed to generate article: ${error.message || "Unknown error"}`,
+      );
+    }
   }
 }
 

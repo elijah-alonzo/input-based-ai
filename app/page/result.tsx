@@ -70,21 +70,24 @@ export default function ArticleResult({
           )}
         </div>
 
-        {/* Download PDF Button - Only show when article is generated */}
-        {result && projectTitle && (
-          <div className="mt-6 pt-4 border-t border-gray-200">
-            <h2 className="text-lg font-semibold mb-3 text-gray-800">
-              Generated Article
-            </h2>
-            <button
-              onClick={handleDownloadPDF}
-              disabled={isDownloading}
-              className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-2 rounded-sm text-sm font-medium transition-colors duration-200"
-            >
-              {isDownloading ? "Generating PDF..." : "Download PDF"}
-            </button>
-          </div>
-        )}
+        {/* Download PDF Button - Only show when article is successfully generated */}
+        {result &&
+          projectTitle &&
+          !result.answer.includes("Error") &&
+          !result.answer.includes("failed") && (
+            <div className="mt-6 pt-4 border-t border-gray-200">
+              <h2 className="text-lg font-semibold mb-3 text-gray-800">
+                Generated Article
+              </h2>
+              <button
+                onClick={handleDownloadPDF}
+                disabled={isDownloading}
+                className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-2 rounded-sm text-sm font-medium transition-colors duration-200"
+              >
+                {isDownloading ? "Generating PDF..." : "Download PDF"}
+              </button>
+            </div>
+          )}
       </div>
     </div>
   );
