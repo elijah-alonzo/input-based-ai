@@ -86,10 +86,7 @@ export default function ArticleResult({
               <p className="text-justify">{result.answer}</p>
             </div>
           ) : (
-            <div className="text-gray-400">
-              Complete the form and click &quot;Generate Article&quot; to create
-              a comprehensive article about your community project.
-            </div>
+            <div className="text-gray-400">Generated article</div>
           )}
         </div>
 
