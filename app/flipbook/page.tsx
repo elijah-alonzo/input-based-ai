@@ -38,13 +38,33 @@ export default function FlipbookPage() {
 
   const prevPage = useCallback(() => {
     if (flipBookRef.current) {
-      flipBookRef.current.flipPrev();
+      // Debug: Log available methods
+      console.log(
+        "FlipBook methods:",
+        Object.getOwnPropertyNames(flipBookRef.current),
+      );
+      console.log(
+        "FlipBook prototype methods:",
+        Object.getOwnPropertyNames(Object.getPrototypeOf(flipBookRef.current)),
+      );
+
+      // Try the method
+      try {
+        flipBookRef.current.turnToPrevPage();
+      } catch (error) {
+        console.error("turnToPrevPage failed:", error);
+      }
     }
   }, []);
 
   const nextPage = useCallback(() => {
     if (flipBookRef.current) {
-      flipBookRef.current.flipNext();
+      // Try the method
+      try {
+        flipBookRef.current.turnToNextPage();
+      } catch (error) {
+        console.error("turnToNextPage failed:", error);
+      }
     }
   }, []);
 
@@ -128,12 +148,6 @@ export default function FlipbookPage() {
                 {articles.map((article, index) => (
                   <Page key={`${article.id}-${index}`}>
                     <div className="page-content article-page">
-                      {/* Page Header */}
-                      <div className="page-header">
-                        <span className="page-number">{index + 1}</span>
-                        <div className="page-separator"></div>
-                      </div>
-
                       {/* Article Image */}
                       <div className="article-image-container">
                         <img
