@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { downloadArticlePDF } from "@/lib/pdf-generator";
+import { useArticleStore } from "@/lib/article-store";
 
 type ChatResponse = {
   question: string;
@@ -22,6 +24,9 @@ export default function ArticleResult({
   isLoading,
 }: ArticleResultProps) {
   const [isDownloading, setIsDownloading] = useState(false);
+  const [isAddingToFlipbook, setIsAddingToFlipbook] = useState(false);
+  const router = useRouter();
+  const addArticle = useArticleStore((state) => state.addArticle);
 
   const handleDownloadPDF = async () => {
     if (!result || !projectTitle) return;
@@ -37,6 +42,24 @@ export default function ArticleResult({
       alert("Failed to download PDF. Please try again.");
     } finally {
       setIsDownloading(false);
+    }
+  };
+
+  const handleAddToFlipbook = async () => {
+    if (!result || !projectTitle) return;
+
+    setIsAddingToFlipbook(true);
+    try {
+      // Add article to global store
+      addArticle(projectTitle, result.answer);
+
+      // Navigate to flipbook page
+      router.push("/flipbook");
+    } catch (error) {
+      console.error("Error adding to flipbook:", error);
+      alert("Failed to add article to flipbook. Please try again.");
+    } finally {
+      setIsAddingToFlipbook(false);
     }
   };
 
@@ -79,13 +102,22 @@ export default function ArticleResult({
               <h2 className="text-lg font-semibold mb-3 text-gray-800">
                 Generated Article
               </h2>
-              <button
-                onClick={handleDownloadPDF}
-                disabled={isDownloading}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-2 rounded-sm text-sm font-medium transition-colors duration-200"
-              >
-                {isDownloading ? "Generating PDF..." : "Download PDF"}
-              </button>
+              <div className="flex gap-3">
+                <button
+                  onClick={handleDownloadPDF}
+                  disabled={isDownloading}
+                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-2 rounded-sm text-sm font-medium transition-colors duration-200"
+                >
+                  {isDownloading ? "Generating PDF..." : "Download PDF"}
+                </button>
+                <button
+                  onClick={handleAddToFlipbook}
+                  disabled={isAddingToFlipbook}
+                  className="bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white px-4 py-2 rounded-sm text-sm font-medium transition-colors duration-200"
+                >
+                  {isAddingToFlipbook ? "Adding..." : "Add to Flipbook"}
+                </button>
+              </div>
             </div>
           )}
       </div>
