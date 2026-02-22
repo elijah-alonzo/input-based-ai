@@ -24,3 +24,351 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Line clamp utilities for text truncation */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-12 {
+  display: -webkit-box;
+  -webkit-line-clamp: 12;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Flipbook styling enhancements */
+.flipbook {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.flipbook .page {
+  background: white;
+  border: 1px solid #e5e7eb;
+}
+
+/* Enhanced Book-specific styling for realistic flipbook */
+.book-container {
+  perspective: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 20px;
+}
+
+.book {
+  box-shadow:
+    0 0 30px rgba(0, 0, 0, 0.15),
+    0 10px 60px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  display: flex;
+  background: #8b4513;
+  transform-style: preserve-3d;
+  border: 3px solid #654321;
+}
+
+/* Enhanced Page content styling */
+.page-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: "Georgia", "Times New Roman", serif;
+  line-height: 1.6;
+  color: #2c3e50;
+  font-size: 14px;
+}
+
+/* Enhanced Article page styling */
+.article-page {
+  padding: 3rem 2.5rem;
+  background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 0.75rem;
+}
+
+.page-separator {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(to right, #3498db, #e74c3c);
+  margin-left: 1rem;
+  border-radius: 1px;
+}
+
+.page-number {
+  font-size: 0.9rem;
+  color: #34495e;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: #ecf0f1;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #bdc3c7;
+}
+
+/* Enhanced Article content styling */
+.article-content-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.article-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 1.25rem;
+  line-height: 1.3;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.article-body {
+  flex-grow: 1;
+  font-size: 0.95rem;
+  color: #34495e;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+.article-paragraph {
+  margin-bottom: 1rem;
+  text-indent: 1.5em;
+  hyphens: auto;
+}
+
+.article-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* Enhanced Footer styling */
+.page-footer {
+  margin-top: auto;
+  padding-top: 1.5rem;
+}
+
+.footer-separator {
+  height: 2px;
+  background: linear-gradient(to right, #e74c3c, #3498db);
+  margin-bottom: 0.75rem;
+  border-radius: 1px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+}
+
+.creation-date {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  font-weight: 500;
+  font-style: italic;
+  background: #f8f9fa;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+}
+
+/* Remove borders from pages for cleaner book look */
+.book .page {
+  border: none !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.1),
+    0 2px 10px rgba(0, 0, 0, 0.1);
+  background: #fefefe;
+  margin: 0;
+}
+
+/* Hard page styling */
+.book .page--left,
+.book .page--right {
+  border: none;
+  background: white;
+}
+
+/* Page content styling */
+.page-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: "Georgia", serif;
+  line-height: 1.6;
+}
+
+/* Cover page styling */
+.cover-page {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+  padding: 3rem 2rem;
+  justify-content: center;
+}
+
+.cover-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 1rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.cover-line {
+  width: 100px;
+  height: 3px;
+  background: white;
+  margin: 1rem auto;
+}
+
+.cover-subtitle {
+  font-size: 1.25rem;
+  margin: 1.5rem 0;
+  opacity: 0.9;
+}
+
+.cover-footer {
+  margin-top: auto;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Article page styling */
+.article-page {
+  padding: 2rem 1.5rem;
+}
+
+.page-header {
+  text-align: center;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.page-number {
+  font-size: 0.75rem;
+  color: #666;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.article-image-container {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.article-image {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.article-image-fallback {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(45deg, #3498db, #8e44ad);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+}
+
+.article-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.article-text {
+  font-size: 0.9rem;
+  color: #34495e;
+  text-align: justify;
+  line-height: 1.7;
+  flex-grow: 1;
+}
+
+.page-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #7f8c8d;
+}
+
+/* Back cover styling */
+.back-cover {
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  color: white;
+  text-align: center;
+  padding: 3rem 2rem;
+  justify-content: center;
+}
+
+.end-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.end-line {
+  width: 80px;
+  height: 3px;
+  background: white;
+  margin: 1rem auto;
+}
+
+.end-message {
+  font-size: 1.1rem;
+  margin: 1.5rem 0;
+  opacity: 0.9;
+}
+
+.end-footer {
+  margin-top: auto;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.book-icon,
+.end-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .book-container {
+    padding: 1rem;
+  }
+
+  .article-title {
+    font-size: 1.2rem;
+  }
+
+  .article-text {
+    font-size: 0.85rem;
+  }
+
+  .cover-title {
+    font-size: 2rem;
+  }
+}
