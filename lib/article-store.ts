@@ -6,11 +6,12 @@ export interface Article {
   title: string;
   content: string;
   createdAt: string;
+  imageData?: string; // base64 encoded image
 }
 
 interface ArticleStore {
   articles: Article[];
-  addArticle: (title: string, content: string) => void;
+  addArticle: (title: string, content: string, imageData?: string) => void;
   removeArticle: (id: string) => void;
   clearArticles: () => void;
 }
@@ -18,11 +19,12 @@ interface ArticleStore {
 export const useArticleStore = create<ArticleStore>((set) => ({
   articles: [],
 
-  addArticle: (title: string, content: string) => {
+  addArticle: (title: string, content: string, imageData?: string) => {
     const newArticle: Article = {
       id: uuidv4(),
       title: title.trim(),
       content: content.trim(),
+      imageData,
       createdAt: new Date().toISOString(),
     };
 

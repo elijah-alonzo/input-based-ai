@@ -10,6 +10,7 @@ type ChatRequest = {
   club?: string;
   projectCategory?: string;
   areaOfFocus?: string;
+  imageData?: string; // base64 encoded image
 };
 
 export async function POST(request: Request) {
@@ -27,6 +28,7 @@ export async function POST(request: Request) {
   const club = payload.club?.trim() || "";
   const projectCategory = payload.projectCategory?.trim() || "";
   const areaOfFocus = payload.areaOfFocus?.trim() || "";
+  const imageData = payload.imageData || undefined;
 
   if (
     !projectTitle &&
@@ -47,6 +49,7 @@ export async function POST(request: Request) {
     club,
     projectCategory,
     areaOfFocus,
+    imageData,
   };
 
   try {
@@ -54,7 +57,7 @@ export async function POST(request: Request) {
     const article = await generateArticle(fields);
 
     // Save project to data.json
-    await saveProject(fields, article);
+    await saveProject(fields, article, imageData);
 
     // Return generated article
     return Response.json({

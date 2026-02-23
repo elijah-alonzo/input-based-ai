@@ -15,6 +15,7 @@ type ArticleResultProps = {
   imagePreview: string | null;
   projectTitle: string;
   isLoading: boolean;
+  imageData?: string; // base64 encoded image
 };
 
 export default function ArticleResult({
@@ -22,6 +23,7 @@ export default function ArticleResult({
   imagePreview,
   projectTitle,
   isLoading,
+  imageData,
 }: ArticleResultProps) {
   const [isDownloading, setIsDownloading] = useState(false);
   const [isAddingToFlipbook, setIsAddingToFlipbook] = useState(false);
@@ -33,7 +35,11 @@ export default function ArticleResult({
 
     setIsDownloading(true);
     try {
-      const success = await downloadArticlePDF(projectTitle, result.answer);
+      const success = await downloadArticlePDF(
+        projectTitle,
+        result.answer,
+        imageData,
+      );
       if (!success) {
         alert("Failed to download PDF. Please try again.");
       }
@@ -50,8 +56,8 @@ export default function ArticleResult({
 
     setIsAddingToFlipbook(true);
     try {
-      // Add article to global store
-      addArticle(projectTitle, result.answer);
+      // Add article to global store with image data
+      addArticle(projectTitle, result.answer, imageData);
 
       // Navigate to flipbook page
       router.push("/flipbook");

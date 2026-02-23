@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   pdf,
+  Image,
 } from "@react-pdf/renderer";
 
 // Define styles for the PDF
@@ -23,6 +24,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#333333",
   },
+  image: {
+    width: "100%",
+    maxHeight: 200,
+    objectFit: "cover",
+    marginBottom: 20,
+    borderRadius: 4,
+  },
   content: {
     fontSize: 12,
     lineHeight: 1.8,
@@ -37,10 +45,11 @@ const styles = StyleSheet.create({
 type ArticlePDFProps = {
   title: string;
   content: string;
+  imageData?: string; // base64 encoded image
 };
 
 // PDF Document Component
-const ArticlePDF = ({ title, content }: ArticlePDFProps) => {
+const ArticlePDF = ({ title, content, imageData }: ArticlePDFProps) => {
   // Split content into paragraphs for better formatting
   const paragraphs = content.split("\n").filter((p) => p.trim() !== "");
 
@@ -48,6 +57,7 @@ const ArticlePDF = ({ title, content }: ArticlePDFProps) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <Text style={styles.title}>{title}</Text>
+        {imageData && <Image src={imageData} style={styles.image} />}
         <View style={styles.content}>
           {paragraphs.map((paragraph, index) => (
             <Text key={index} style={styles.paragraph}>
@@ -61,7 +71,11 @@ const ArticlePDF = ({ title, content }: ArticlePDFProps) => {
 };
 
 // Function to generate and download PDF
-export const downloadArticlePDF = async (title: string, content: string) => {
+export const downloadArticlePDF = async (
+  title: string,
+  content: string,
+  imageData?: string,
+) => {
   try {
     // Clean title for filename (remove special characters)
     const cleanTitle = title
@@ -72,7 +86,7 @@ export const downloadArticlePDF = async (title: string, content: string) => {
 
     // Generate PDF blob
     const blob = await pdf(
-      <ArticlePDF title={title} content={content} />,
+      <ArticlePDF title={title} content={content} imageData={imageData} />,
     ).toBlob();
 
     // Create download link and trigger download

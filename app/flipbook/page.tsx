@@ -151,16 +151,28 @@ export default function FlipbookPage() {
                       {/* Article Image */}
                       <div className="article-image-container">
                         <img
-                          src={sampleImages[index % sampleImages.length]}
-                          alt={`Article ${index + 1}`}
+                          src={
+                            article.imageData ||
+                            sampleImages[index % sampleImages.length]
+                          }
+                          alt={article.title || `Article ${index + 1}`}
                           className="article-image"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
-                            target.style.display = "none";
-                            const fallback = document.createElement("div");
-                            fallback.className = "article-image-fallback";
-                            fallback.textContent = "Article Image";
-                            target.parentNode?.insertBefore(fallback, target);
+                            // If uploaded image fails to load, fallback to sample images
+                            if (
+                              article.imageData &&
+                              target.src === article.imageData
+                            ) {
+                              target.src =
+                                sampleImages[index % sampleImages.length];
+                            } else {
+                              target.style.display = "none";
+                              const fallback = document.createElement("div");
+                              fallback.className = "article-image-fallback";
+                              fallback.textContent = "Article Image";
+                              target.parentNode?.insertBefore(fallback, target);
+                            }
                           }}
                         />
                       </div>

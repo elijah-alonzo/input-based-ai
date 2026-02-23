@@ -21,11 +21,32 @@ export default function GeneratePage() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imageData, setImageData] = useState<string | undefined>(undefined);
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
-    if (file) setImagePreview(URL.createObjectURL(file));
+    if (file) {
+      setSelectedFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
   }
+
+  // Helper function to convert file to base64
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === "string") {
+          resolve(reader.result);
+        } else {
+          reject(new Error("Failed to read file as base64"));
+        }
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -45,6 +66,13 @@ export default function GeneratePage() {
 
     setIsLoading(true);
     try {
+      // Convert image to base64 if present
+      let imgData: string | undefined;
+      if (selectedFile) {
+        imgData = await fileToBase64(selectedFile);
+        setImageData(imgData); // Store for use in result component
+      }
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -54,6 +82,7 @@ export default function GeneratePage() {
           club: club.trim(),
           projectCategory: projectCategory.trim(),
           areaOfFocus: areaOfFocus.trim(),
+          imageData: imgData,
         }),
       });
       const body = (await response.json()) as ChatResponse | { error?: string };
@@ -108,6 +137,7 @@ export default function GeneratePage() {
               imagePreview={imagePreview}
               projectTitle={projectTitle}
               isLoading={isLoading}
+              imageData={imageData}
             />
           </div>
         </div>

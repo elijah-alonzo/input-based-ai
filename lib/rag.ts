@@ -9,6 +9,7 @@ export type ProjectFields = {
   club: string;
   projectCategory: string;
   areaOfFocus: string;
+  imageData?: string; // base64 encoded image
 };
 
 export type Project = {
@@ -16,6 +17,7 @@ export type Project = {
   timestamp: string;
   fields: ProjectFields;
   generated_article: string;
+  imageData?: string; // base64 encoded image
 };
 
 // Article generation with mock content for reliable functionality
@@ -37,6 +39,7 @@ This project exemplifies how dedicated individuals and organizations can work to
 export async function saveProject(
   fields: ProjectFields,
   article: string,
+  imageData?: string,
 ): Promise<void> {
   const dataPath = path.join(process.cwd(), "data", "data.json");
 
@@ -45,6 +48,7 @@ export async function saveProject(
     timestamp: new Date().toISOString(),
     fields,
     generated_article: article,
+    imageData,
   };
 
   try {
