@@ -38,35 +38,36 @@
             .empty { font-size: 0.875rem; color: #a3a3a3; }
         </style>
     </head>
-    <body class="bg-gray-50 text-gray-900 min-h-screen">
-        <main class="max-w-5xl mx-auto px-6 py-8">
-            <div class="flex items-center justify-between mb-2 gap-4">
-                <h1 class="text-3xl font-semibold">Input-Based Article Generator</h1>
-                <a href="{{ route('flipbook.index') }}" class="inline-flex items-center bg-black text-white rounded px-4 py-2 text-sm hover:bg-gray-800">Go to Flipbook</a>
+    <body>
+        <main>
+            <div class="header">
+                <h1>Laravel</h1>
+                <a href="{{ route('flipbook.index') }}" class="go-to-btn">Go to Flipbook</a>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <section class="bg-white border border-gray-200 rounded p-5">
-                    <form method="POST" action="{{ route('generator.generate') }}" class="space-y-4">
+            <p class="subtitle">Laravel version</p>
+            <div class="grid">
+                <section class="section">
+                    <form method="POST" action="{{ route('generator.generate') }}">
                         @csrf
 
-                        <div>
-                            <label for="project_title" class="block text-sm font-medium mb-1">Project Title</label>
-                            <input id="project_title" name="project_title" type="text" value="{{ old('project_title', $submittedFields['project_title'] ?? '') }}" class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+                        <div class="form-group">
+                            <label for="project_title">Project Title</label>
+                            <input id="project_title" name="project_title" type="text" value="{{ old('project_title', $submittedFields['project_title'] ?? '') }}">
                         </div>
 
-                        <div>
-                            <label for="project_date" class="block text-sm font-medium mb-1">Project Date</label>
-                            <input id="project_date" name="project_date" type="text" value="{{ old('project_date', $submittedFields['project_date'] ?? '') }}" class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+                        <div class="form-group">
+                            <label for="project_date">Project Date</label>
+                            <input id="project_date" name="project_date" type="text" value="{{ old('project_date', $submittedFields['project_date'] ?? '') }}">
                         </div>
 
-                        <div>
-                            <label for="club" class="block text-sm font-medium mb-1">Club / Organization</label>
-                            <input id="club" name="club" type="text" value="{{ old('club', $submittedFields['club'] ?? '') }}" class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+                        <div class="form-group">
+                            <label for="club">Club / Organization</label>
+                            <input id="club" name="club" type="text" value="{{ old('club', $submittedFields['club'] ?? '') }}">
                         </div>
 
-                        <div>
-                            <label for="project_category" class="block text-sm font-medium mb-1">Project Category</label>
-                            <select id="project_category" name="project_category" class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+                        <div class="form-group">
+                            <label for="project_category">Project Category</label>
+                            <select id="project_category" name="project_category">
                                 @php($category = old('project_category', $submittedFields['project_category'] ?? ''))
                                 <option value="">Select category...</option>
                                 <option value="Community" @selected($category === 'Community')>Community</option>
@@ -76,9 +77,9 @@
                             </select>
                         </div>
 
-                        <div>
-                            <label for="area_of_focus" class="block text-sm font-medium mb-1">Area of Focus</label>
-                            <select id="area_of_focus" name="area_of_focus" class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+                        <div class="form-group">
+                            <label for="area_of_focus">Area of Focus</label>
+                            <select id="area_of_focus" name="area_of_focus">
                                 @php($focus = old('area_of_focus', $submittedFields['area_of_focus'] ?? ''))
                                 <option value="">Select area of focus...</option>
                                 <option value="Basic Education and Literacy" @selected($focus === 'Basic Education and Literacy')>Basic Education and Literacy</option>
@@ -89,45 +90,47 @@
                         </div>
 
                         @if ($errors->any())
-                            <div class="text-sm text-red-600">
+                            <div class="error">
                                 {{ $errors->first('form') ?? $errors->first() }}
                             </div>
                         @endif
 
-                        <button type="submit" class="w-full bg-black text-white rounded px-4 py-2 text-sm hover:bg-gray-800">Generate Article</button>
+                        <button type="submit" class="btn-primary">Generate Article</button>
                     </form>
                 </section>
 
-                <section class="bg-white border border-gray-200 rounded p-5">
-                    <h2 class="text-lg font-semibold mb-3">Generated Article</h2>
+                <section class="section">
+                    <h2>Generated Article</h2>
 
                     @if (!empty($article))
-                        <article class="rows-10 whitespace-pre-wrap leading-relaxed text-sm text-gray-800 w-full h-64">{{ $article }}</article>
-                        <div class="mt-4 pt-4 border-t border-gray-200 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <article class="article-content">{{ $article }}</article>
+                        <div class="actions">
                             <form method="POST" action="{{ route('generator.download') }}">
                                 @csrf
+                                <input type="hidden" name="generated_article" value="{{ $article }}">
                                 <input type="hidden" name="project_title" value="{{ $submittedFields['project_title'] ?? '' }}">
 
-                                <button type="submit" class="w-full bg-blue-600 text-white rounded px-4 py-2 text-sm hover:bg-blue-700">
+                                <button type="submit" class="btn-blue">
                                     Download PDF
                                 </button>
                             </form>
 
                             <form method="POST" action="{{ route('flipbook.add') }}">
                                 @csrf
+                                <input type="hidden" name="generated_article" value="{{ $article }}">
                                 <input type="hidden" name="project_title" value="{{ $submittedFields['project_title'] ?? '' }}">
                                 <input type="hidden" name="project_date" value="{{ $submittedFields['project_date'] ?? '' }}">
                                 <input type="hidden" name="club" value="{{ $submittedFields['club'] ?? '' }}">
                                 <input type="hidden" name="project_category" value="{{ $submittedFields['project_category'] ?? '' }}">
                                 <input type="hidden" name="area_of_focus" value="{{ $submittedFields['area_of_focus'] ?? '' }}">
 
-                                <button type="submit" class="w-full bg-green-600 text-white rounded px-4 py-2 text-sm hover:bg-green-700">
+                                <button type="submit" class="btn-green">
                                     Add to Flipbook
                                 </button>
                             </form>
                         </div>
                     @else
-                        <p class="text-sm text-gray-500">Your generated response will appear here.</p>
+                        <p class="empty">Your generated response will appear here.</p>
                     @endif
                 </section>
             </div>
