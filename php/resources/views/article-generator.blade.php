@@ -44,8 +44,6 @@
                 <h1 class="text-3xl font-semibold">Input-Based Article Generator</h1>
                 <a href="{{ route('flipbook.index') }}" class="inline-flex items-center bg-black text-white rounded px-4 py-2 text-sm hover:bg-gray-800">Go to Flipbook</a>
             </div>
-            <p class="text-sm text-gray-600 mb-6">Laravel version (phase 2): generate and add articles to flipbook.</p>
-
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <section class="bg-white border border-gray-200 rounded p-5">
                     <form method="POST" action="{{ route('generator.generate') }}" class="space-y-4">
@@ -104,12 +102,10 @@
                     <h2 class="text-lg font-semibold mb-3">Generated Article</h2>
 
                     @if (!empty($article))
-                        <article class="whitespace-pre-wrap leading-relaxed text-sm text-gray-800">{{ $article }}</article>
-
+                        <article class="rows-10 whitespace-pre-wrap leading-relaxed text-sm text-gray-800 w-full h-64">{{ $article }}</article>
                         <div class="mt-4 pt-4 border-t border-gray-200 grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <form method="POST" action="{{ route('generator.download') }}">
                                 @csrf
-                                <textarea name="generated_article" class="hidden">{{ $article }}</textarea>
                                 <input type="hidden" name="project_title" value="{{ $submittedFields['project_title'] ?? '' }}">
 
                                 <button type="submit" class="w-full bg-blue-600 text-white rounded px-4 py-2 text-sm hover:bg-blue-700">
@@ -119,7 +115,6 @@
 
                             <form method="POST" action="{{ route('flipbook.add') }}">
                                 @csrf
-                                <textarea name="generated_article" class="hidden">{{ $article }}</textarea>
                                 <input type="hidden" name="project_title" value="{{ $submittedFields['project_title'] ?? '' }}">
                                 <input type="hidden" name="project_date" value="{{ $submittedFields['project_date'] ?? '' }}">
                                 <input type="hidden" name="club" value="{{ $submittedFields['club'] ?? '' }}">
