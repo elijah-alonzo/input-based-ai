@@ -6,9 +6,37 @@
 
         <title>Article Generator (PHP)</title>
 
-        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @endif
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { background-color: #f9fafb; color: #111827; min-height: 100vh; font-family: system-ui, -apple-system, sans-serif; }
+            main { max-width: 80rem; margin: 0 auto; padding: 2rem 1.5rem; }
+            .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; gap: 1rem; }
+            h1 { font-size: 1.875rem; font-weight: 600; }
+            h2 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem; }
+            .subtitle { font-size: 0.875rem; color: #4b5563; margin-bottom: 1.5rem; }
+            .go-to-btn { display: inline-flex; align-items: center; background-color: #000; color: white; border-radius: 0.375rem; padding: 0.5rem 1rem; font-size: 0.875rem; text-decoration: none; }
+            .go-to-btn:hover { background-color: #1f2937; }
+            .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+            @media (max-width: 1024px) { .grid { grid-template-columns: 1fr; } }
+            .section { background-color: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.25rem; }
+            .form-group { margin-bottom: 1rem; }
+            label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.25rem; }
+            input, select, textarea { width: 100%; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; font-family: inherit; }
+            input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; }
+            .error { font-size: 0.875rem; color: #dc2626; }
+            button { width: 100%; border: none; border-radius: 0.375rem; padding: 0.5rem 1rem; font-size: 0.875rem; cursor: pointer; font-weight: 500; }
+            .btn-primary { background-color: #000; color: white; }
+            .btn-primary:hover { background-color: #1f2937; }
+            .btn-blue { background-color: #2563eb; color: white; }
+            .btn-blue:hover { background-color: #1d4ed8; }
+            .btn-green { background-color: #16a34a; color: white; }
+            .btn-green:hover { background-color: #15803d; }
+            .article-content { white-space: pre-wrap; line-height: 1.625; font-size: 0.875rem; color: #1f2937; }
+            .actions { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e5e7eb; display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+            .actions form { display: contents; }
+            .actions button { display: block; }
+            .empty { font-size: 0.875rem; color: #a3a3a3; }
+        </style>
     </head>
     <body class="bg-gray-50 text-gray-900 min-h-screen">
         <main class="max-w-5xl mx-auto px-6 py-8">

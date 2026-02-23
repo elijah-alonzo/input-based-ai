@@ -16,7 +16,10 @@ class ArticleGeneratorController extends Controller
 {
     public function index(): View
     {
-        return view('article-generator');
+        return view('article-generator', [
+            'article' => '',
+            'submittedFields' => [],
+        ]);
     }
 
     public function generate(Request $request, InputArticleGenerator $generator): View|RedirectResponse
