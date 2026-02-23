@@ -78,19 +78,31 @@
                     @if (!empty($article))
                         <article class="whitespace-pre-wrap leading-relaxed text-sm text-gray-800">{{ $article }}</article>
 
-                        <form method="POST" action="{{ route('flipbook.add') }}" class="mt-4 pt-4 border-t border-gray-200">
-                            @csrf
-                            <textarea name="generated_article" class="hidden">{{ $article }}</textarea>
-                            <input type="hidden" name="project_title" value="{{ $submittedFields['project_title'] ?? '' }}">
-                            <input type="hidden" name="project_date" value="{{ $submittedFields['project_date'] ?? '' }}">
-                            <input type="hidden" name="club" value="{{ $submittedFields['club'] ?? '' }}">
-                            <input type="hidden" name="project_category" value="{{ $submittedFields['project_category'] ?? '' }}">
-                            <input type="hidden" name="area_of_focus" value="{{ $submittedFields['area_of_focus'] ?? '' }}">
+                        <div class="mt-4 pt-4 border-t border-gray-200 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <form method="POST" action="{{ route('generator.download') }}">
+                                @csrf
+                                <textarea name="generated_article" class="hidden">{{ $article }}</textarea>
+                                <input type="hidden" name="project_title" value="{{ $submittedFields['project_title'] ?? '' }}">
 
-                            <button type="submit" class="w-full bg-green-600 text-white rounded px-4 py-2 text-sm hover:bg-green-700">
-                                Add to Flipbook
-                            </button>
-                        </form>
+                                <button type="submit" class="w-full bg-blue-600 text-white rounded px-4 py-2 text-sm hover:bg-blue-700">
+                                    Download PDF
+                                </button>
+                            </form>
+
+                            <form method="POST" action="{{ route('flipbook.add') }}">
+                                @csrf
+                                <textarea name="generated_article" class="hidden">{{ $article }}</textarea>
+                                <input type="hidden" name="project_title" value="{{ $submittedFields['project_title'] ?? '' }}">
+                                <input type="hidden" name="project_date" value="{{ $submittedFields['project_date'] ?? '' }}">
+                                <input type="hidden" name="club" value="{{ $submittedFields['club'] ?? '' }}">
+                                <input type="hidden" name="project_category" value="{{ $submittedFields['project_category'] ?? '' }}">
+                                <input type="hidden" name="area_of_focus" value="{{ $submittedFields['area_of_focus'] ?? '' }}">
+
+                                <button type="submit" class="w-full bg-green-600 text-white rounded px-4 py-2 text-sm hover:bg-green-700">
+                                    Add to Flipbook
+                                </button>
+                            </form>
+                        </div>
                     @else
                         <p class="text-sm text-gray-500">Your generated response will appear here.</p>
                     @endif

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Services\FlipbookStore;
 use App\Services\InputArticleGenerator;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
 use Illuminate\View\View;
 
@@ -104,5 +107,26 @@ class ArticleGeneratorController extends Controller
         return view('flipbook', [
             'articles' => $articles,
         ]);
+    }
+
+    public function downloadPdf(Request $request): Response
+    {
+        $validated = $request->validate([
+            'project_title' => ['nullable', 'string', 'max:255'],
+            'generated_article' => ['required', 'string'],
+        ]);
+
+        $projectTitle = trim((string) ($validated['project_title'] ?? ''));
+        $article = (string) $validated['generated_article'];
+        $displayTitle = $projectTitle !== '' ? $projectTitle : 'Untitled Project';
+        $slug = Str::of($displayTitle)->slug('-')->value();
+        $filename = 'article-'.($slug !== '' ? $slug : 'untitled').'.pdf';
+
+        $pdf = Pdf::loadView('pdf.article', [
+            'title' => $displayTitle,
+            'content' => $article,
+        ]);
+
+        return $pdf->download($filename);
     }
 }
