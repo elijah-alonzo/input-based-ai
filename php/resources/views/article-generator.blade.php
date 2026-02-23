@@ -12,8 +12,11 @@
     </head>
     <body class="bg-gray-50 text-gray-900 min-h-screen">
         <main class="max-w-5xl mx-auto px-6 py-8">
-            <h1 class="text-3xl font-semibold mb-2">Input-Based Article Generator</h1>
-            <p class="text-sm text-gray-600 mb-6">Laravel version (phase 1): generate response from form inputs.</p>
+            <div class="flex items-center justify-between mb-2 gap-4">
+                <h1 class="text-3xl font-semibold">Input-Based Article Generator</h1>
+                <a href="{{ route('flipbook.index') }}" class="inline-flex items-center bg-black text-white rounded px-4 py-2 text-sm hover:bg-gray-800">Go to Flipbook</a>
+            </div>
+            <p class="text-sm text-gray-600 mb-6">Laravel version (phase 2): generate and add articles to flipbook.</p>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <section class="bg-white border border-gray-200 rounded p-5">
@@ -74,6 +77,20 @@
 
                     @if (!empty($article))
                         <article class="whitespace-pre-wrap leading-relaxed text-sm text-gray-800">{{ $article }}</article>
+
+                        <form method="POST" action="{{ route('flipbook.add') }}" class="mt-4 pt-4 border-t border-gray-200">
+                            @csrf
+                            <textarea name="generated_article" class="hidden">{{ $article }}</textarea>
+                            <input type="hidden" name="project_title" value="{{ $submittedFields['project_title'] ?? '' }}">
+                            <input type="hidden" name="project_date" value="{{ $submittedFields['project_date'] ?? '' }}">
+                            <input type="hidden" name="club" value="{{ $submittedFields['club'] ?? '' }}">
+                            <input type="hidden" name="project_category" value="{{ $submittedFields['project_category'] ?? '' }}">
+                            <input type="hidden" name="area_of_focus" value="{{ $submittedFields['area_of_focus'] ?? '' }}">
+
+                            <button type="submit" class="w-full bg-green-600 text-white rounded px-4 py-2 text-sm hover:bg-green-700">
+                                Add to Flipbook
+                            </button>
+                        </form>
                     @else
                         <p class="text-sm text-gray-500">Your generated response will appear here.</p>
                     @endif

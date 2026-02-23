@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\FlipbookStore;
 use App\Services\InputArticleGenerator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -63,6 +64,45 @@ class ArticleGeneratorController extends Controller
         return view('article-generator', [
             'article' => $article,
             'submittedFields' => $fields,
+        ]);
+    }
+
+    public function addToFlipbook(Request $request, FlipbookStore $flipbookStore): RedirectResponse
+    {
+        $validated = $request->validate([
+            'project_title' => ['nullable', 'string', 'max:255'],
+            'project_date' => ['nullable', 'string', 'max:255'],
+            'club' => ['nullable', 'string', 'max:255'],
+            'project_category' => ['nullable', 'string', 'max:255'],
+            'area_of_focus' => ['nullable', 'string', 'max:255'],
+            'generated_article' => ['required', 'string'],
+        ]);
+
+        $fields = [
+            'project_title' => trim((string) ($validated['project_title'] ?? '')),
+            'project_date' => trim((string) ($validated['project_date'] ?? '')),
+            'club' => trim((string) ($validated['club'] ?? '')),
+            'project_category' => trim((string) ($validated['project_category'] ?? '')),
+            'area_of_focus' => trim((string) ($validated['area_of_focus'] ?? '')),
+        ];
+
+        $flipbookStore->add(
+            title: $fields['project_title'] ?: 'Untitled Project',
+            content: (string) $validated['generated_article'],
+            fields: $fields,
+        );
+
+        return redirect()
+            ->route('flipbook.index')
+            ->with('status', 'Article added to flipbook.');
+    }
+
+    public function flipbook(FlipbookStore $flipbookStore): View
+    {
+        $articles = $flipbookStore->all();
+
+        return view('flipbook', [
+            'articles' => $articles,
         ]);
     }
 }
